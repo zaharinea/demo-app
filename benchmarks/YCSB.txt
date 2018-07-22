@@ -1,0 +1,30 @@
+redis-server
+
+/bin/ycsb load redis -s -P workloads/workloada -p "redis.host=127.0.0.1" -p "redis.port=6379" > workloada_redis_load.txt
+
+/bin/ycsb run redis -s -P workloads/workloada -p "redis.host=127.0.0.1" -p "redis.port=6379" > workloada_redis_run.txt
+
+
+tarantool
+
+box.cfg {
+   listen=3301,
+   memtx_memory = 2 * 1024 * 1024 * 1024, -- 2Gb
+   logger="tarantool.log",
+   log_level=5,
+   logger_nonblock=true,
+   wal_mode="write",
+   pid_file="tarantool.pid"
+}
+
+box.schema.space.create("ycsb", {id = 1024})
+box.space.ycsb:create_index('primary', {type = 'tree', parts = {1, 'STR'}})
+box.schema.user.grant('guest', 'read,write,execute', 'universe')
+
+./bin/ycsb load tarantool -s -P workloads/workloada > workloada_tarantool_tree_load.txt
+
+./bin/ycsb run tarantool -s -P workloads/workloada > workloada_tarantool_tree_run.txt
+
+
+
+

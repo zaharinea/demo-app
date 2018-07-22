@@ -1,0 +1,36 @@
+минутный тест с 1000 соединений и 50 потоками:
+
+wrk -d60s -c1000 -t50 --timeout 2s -s benchmarks/post.lua http://localhost:12345/demo
+Running 1m test @ http://localhost:12345/demo
+  50 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    72.04ms   68.93ms   2.00s    97.93%
+    Req/Sec   266.73    129.42     3.66k    83.98%
+  785654 requests in 1.00m, 146.00MB read
+  Socket errors: connect 0, read 1042, write 16, timeout 450
+Requests/sec:  13072.59
+Transfer/sec:      2.43MB
+
+
+wrk -d60s -c1000 -t50 --timeout 2s -s benchmarks/put.lua http://localhost:12345/demo/1
+Running 1m test @ http://localhost:12345/demo/1
+  50 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    72.33ms   60.94ms   1.97s    94.86%
+    Req/Sec   263.29    141.50     2.38k    78.30%
+  749625 requests in 1.00m, 132.26MB read
+  Socket errors: connect 0, read 1713, write 17, timeout 488
+Requests/sec:  12471.65
+Transfer/sec:      2.20MB
+
+
+wrk -d60s -c1000 -t50 --timeout 2s http://localhost:12345/demo/1
+Running 1m test @ http://localhost:12345/demo/1
+  50 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    68.85ms   59.76ms   2.00s    96.87%
+    Req/Sec   243.21    148.55     2.44k    85.29%
+  697075 requests in 1.00m, 122.98MB read
+  Socket errors: connect 0, read 1617, write 29, timeout 704
+Requests/sec:  11598.93
+Transfer/sec:      2.05MB
