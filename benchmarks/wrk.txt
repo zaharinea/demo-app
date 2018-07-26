@@ -1,5 +1,10 @@
 минутный тест с 1000 соединений и 50 потоками:
 
+-Computer-
+Processor   : 2x Intel(R) Core(TM) i5-4460  CPU @ 3.4GHz
+Memory    : 8Gb 16000 MHz DDR3
+Operating System    :  macOS High Sierra
+
 wrk -d60s -c1000 -t50 --timeout 2s -s benchmarks/post.lua http://localhost:12345/demo
 Running 1m test @ http://localhost:12345/demo
   50 threads and 1000 connections
@@ -24,6 +29,7 @@ Requests/sec:  12471.65
 Transfer/sec:      2.20MB
 
 
+
 wrk -d60s -c1000 -t50 --timeout 2s http://localhost:12345/demo/1
 Running 1m test @ http://localhost:12345/demo/1
   50 threads and 1000 connections
@@ -34,3 +40,44 @@ Running 1m test @ http://localhost:12345/demo/1
   Socket errors: connect 0, read 1617, write 29, timeout 704
 Requests/sec:  11598.93
 Transfer/sec:      2.05MB
+
+
+
+-Computer-
+Processor   : 4x Intel(R) Core(TM) i5-4460  CPU @ 3.20GHz
+Memory    : 16Gb
+Operating System    : Ubuntu 16.04.5 LTS
+
+
+wrk -d60s -c1000 -t100 --timeout 2s -s benchmarks/post.lua http://localhost:12345/demo
+Running 1m test @ http://localhost:12345/demo
+  100 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    41.52ms   52.74ms   1.99s    99.33%
+    Req/Sec   254.94    107.32     4.20k    89.81%
+  1343362 requests in 1.00m, 251.10MB read
+  Socket errors: connect 79, read 0, write 0, timeout 375
+Requests/sec:  22353.09
+Transfer/sec:      4.18MB
+
+wrk -d60s -c1000 -t100 --timeout 2s -s benchmarks/put.lua http://localhost:12345/demo/1
+Running 1m test @ http://localhost:12345/demo/1
+  100 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    42.23ms   59.18ms   2.00s    99.32%
+    Req/Sec   246.92    106.19     3.87k    88.44%
+  1330543 requests in 1.00m, 234.75MB read
+  Socket errors: connect 79, read 0, write 0, timeout 398
+Requests/sec:  22139.67
+Transfer/sec:      3.91MB
+
+wrk -d60s -c1000 -t100 http://localhost:12345/demo/1
+Running 1m test @ http://localhost:12345/demo/1
+  100 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    35.59ms   49.57ms   2.00s    98.80%
+    Req/Sec   300.87    230.12    21.73k    95.11%
+  1541556 requests in 1.00m, 271.98MB read
+  Socket errors: connect 79, read 0, write 0, timeout 526
+Requests/sec:  25649.98
+Transfer/sec:      4.53MB
