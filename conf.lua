@@ -13,6 +13,6 @@ box = {
 }
 
 app = {
-    http_ip = "127.0.0.1",
-    http_port = 12345,
+    http_ip = os.getenv("HTTP_IP") or "0.0.0.0",
+    http_port = os.getenv("HTTP_PORT") or 12345,
 }
